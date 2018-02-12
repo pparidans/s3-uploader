@@ -4,6 +4,12 @@ from tinys3 import Connection
 import click
 import string
 
+BUCKETS = {
+    "alice": "alice-paridans-com",
+    "romain": "romain-paridans-com",
+    # "test": "pparidans-test",
+}
+
 def format_filename(s):
     """Take a string and return a valid filename constructed from the string.
 Uses a whitelist approach: any characters not present in valid_chars are
@@ -30,17 +36,12 @@ def cli():
 
 @cli.command()
 @click.argument("file_path")
-@click.option("-c", "--category", type=click.Choice(["alice", "romain"]))
+@click.option("-c", "--category", type=click.Choice(BUCKETS.keys()))
 @click.option("-n", "--dry-run", "dry_run", is_flag=True, default=False)
 def add(file_path, category, dry_run):
     click.secho("Uploading %s :" % file_path, fg="green")
 
-    buckets = {
-        "alice": "alice-paridans-com",
-        "romain": "romain-paridans-com",
-    }
-
-    bucket_name = buckets[category]
+    bucket_name = BUCKETS[category]
     abs_path = path.abspath(file_path)
     filename = format_filename(path.basename(abs_path))
     shasum = sha1sum(abs_path)
