@@ -54,7 +54,8 @@ def add(file_path, category, dry_run):
         s3_conn = Connection(environ.get("S3_ACCESS_KEY"), environ.get("S3_SECRET_KEY"), tls=True, endpoint='s3-eu-west-1.amazonaws.com')
         with open(abs_path, "rb") as f:
             s3_conn.upload(dest_path, f, bucket_name)
-        click.secho("Uploaded successfully to '%s'" % public_url, fg="green")
+        click.echo("Uploaded successfully to:")
+        click.secho(public_url, fg="green")
     else:
         click.secho("Dry run", fg="red")
 
