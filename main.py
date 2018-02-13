@@ -22,7 +22,7 @@ an invalid filename.
 
 """
     valid_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
-    filename = ''.join(c for c in s if c in valid_chars)
+    filename = ''.join(c for c in s.strip() if c in valid_chars)
     filename = filename.replace(' ','-') # no spaces in filenames.
     return filename.lower()
 
